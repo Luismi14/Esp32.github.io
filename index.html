@@ -7,66 +7,132 @@
     <style>
         /* Estilos básicos para la página */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
             margin: 0;
             padding: 0;
+            color: #333;
+            line-height: 1.6;
         }
 
         header {
-            background-color: #4CAF50;
+            background-color: #2c3e50;
             color: white;
-            padding: 20px;
+            padding: 20px 0;
             text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        h1, h2 {
+        header h1 {
+            font-size: 2.5rem;
             margin: 0;
         }
 
-        section {
-            margin: 20px;
+        header p {
+            font-size: 1.2rem;
         }
 
-        .content-container {
-            max-width: 900px;
-            margin: 0 auto;
+        section {
+            margin: 40px auto;
+            max-width: 1200px;
             padding: 20px;
-            background-color: white;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
 
         .command-line {
             background-color: #2c3e50;
-            color: white;
-            padding: 10px;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
             font-family: "Courier New", Courier, monospace;
-            border-radius: 5px;
-            margin: 10px 0;
+            margin: 20px 0;
             overflow-x: auto;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .command-line pre {
+            white-space: pre-wrap;
             word-wrap: break-word;
+            margin: 0;
         }
 
         footer {
-            background-color: #333;
+            background-color: #34495e;
             color: white;
             text-align: center;
-            padding: 10px;
-            position: absolute;
+            padding: 15px;
+            position: relative;
             width: 100%;
             bottom: 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .link-btn {
-            color: #4CAF50;
+        footer a {
+            color: #1abc9c;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .link-btn:hover {
+        footer a:hover {
             text-decoration: underline;
+        }
+
+        .button-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1abc9c;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-link:hover {
+            background-color: #16a085;
+        }
+
+        .content-container {
+            margin: 0 15px;
+        }
+
+        .content-container h2 {
+            font-size: 2.2rem;
+        }
+
+        .content-container p, .content-container li {
+            font-size: 1.1rem;
+            color: #555;
         }
     </style>
 </head>
@@ -74,27 +140,26 @@
 
     <header>
         <h1>Conexión ESP32 a Wi-Fi</h1>
-        <p>Aprende a conectar tu ESP32 a una red Wi-Fi y empieza a crear proyectos IoT</p>
+        <p>Aprende a conectar tu ESP32 a una red Wi-Fi y empieza a crear proyectos IoT innovadores</p>
     </header>
 
     <div class="content-container">
         <!-- Sección de introducción -->
         <section>
             <h2>¿Para qué sirve conectar el ESP32 a Wi-Fi?</h2>
-            <p>El **ESP32** es un microcontrolador altamente versátil con capacidades de conectividad **Wi-Fi** y **Bluetooth**. Conectar el ESP32 a una red Wi-Fi abre un sinfín de posibilidades, como:</p>
+            <p>El **ESP32** es un microcontrolador versátil que ofrece conectividad **Wi-Fi** y **Bluetooth**, ideal para aplicaciones IoT. Al conectar el ESP32 a una red Wi-Fi, se pueden realizar proyectos como:</p>
             <ul>
-                <li><strong>Desarrollo de proyectos IoT:</strong> Puedes conectar sensores, dispositivos y actuadores a la red para crear aplicaciones inteligentes.</li>
-                <li><strong>Automatización del hogar:</strong> Controla dispositivos electrónicos a través de internet o desde una aplicación móvil.</li>
-                <li><strong>Integración con la nube:</strong> Envía datos a plataformas en la nube como ThingSpeak, Blynk o Firebase.</li>
-                <li><strong>Comunicación remota:</strong> Interactúa con tu dispositivo desde cualquier lugar a través de internet.</li>
+                <li><strong>Automatización del hogar:</strong> Controla dispositivos electrónicos desde cualquier lugar.</li>
+                <li><strong>Monitoreo remoto:</strong> Accede a sensores y datos desde cualquier parte del mundo.</li>
+                <li><strong>Integración con la nube:</strong> Envía datos a plataformas como ThingSpeak o Blynk.</li>
+                <li><strong>Comunicación entre dispositivos:</strong> Conecta varios dispositivos ESP32 para crear redes IoT.</li>
             </ul>
-            <p>La capacidad de conectar el ESP32 a Wi-Fi es una habilidad fundamental para crear aplicaciones modernas y conectadas.</p>
         </section>
 
         <!-- Sección de código -->
         <section>
             <h2>Código de Conexión Paso a Paso</h2>
-            <p>A continuación, te mostramos el código básico para conectar el ESP32 a una red Wi-Fi utilizando el entorno de desarrollo Arduino IDE:</p>
+            <p>A continuación, te mostramos el código básico para conectar el ESP32 a una red Wi-Fi:</p>
             
             <div class="command-line">
                 <pre>
@@ -129,195 +194,18 @@ void loop() {
                 </pre>
             </div>
 
-            <p>Este código es bastante sencillo. Sólo tienes que reemplazar "Tu_Nombre_de_Red" y "Tu_Contraseña" con los datos de tu red Wi-Fi. Luego, sube el código a tu ESP32 usando el Arduino IDE y abre el Monitor Serie para ver la dirección IP que se asignó a tu dispositivo.</p>
+            <p>Este código es sencillo de usar. Solo debes sustituir "Tu_Nombre_de_Red" y "Tu_Contraseña" con los datos de tu red Wi-Fi. Luego, sube el código a tu ESP32 y abre el Monitor Serie para obtener la dirección IP asignada.</p>
         </section>
 
-        <!-- Sección de servidor web con ESP32 -->
-        <section>
-            <h2>Crear un Servidor Web con ESP32</h2>
-            <p>A continuación, te mostramos otro ejemplo en el que el ESP32 crea una página web con botones. Al presionar los botones, puedes enviar comandos desde la página web al ESP32:</p>
-            
-            <div class="command-line">
-                <pre>
-// Saldrá una página web con cuatro botones.
-
-#include <WiFi.h>
- 
-const char* ssid = "";
-const char* password = "";
-
-WiFiServer server(80);
-
-void setup() {
-  Serial.begin(115200);
- 
-// Conecta a la red wifi.
-  Serial.println();
-  Serial.print("Conectando con ");
-  Serial.println(ssid);
- 
-  WiFi.begin(ssid, password);
- 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("Conectado con WiFi.");
- 
-  // Inicio del Servidor web.
-  server.begin();
-  Serial.println("Servidor web iniciado.");
- 
-  // Esta es la IP
-  Serial.print("Esta es la IP para conectar: ");
-  Serial.print("http://");
-  Serial.println(WiFi.localIP());
-}
- 
-void loop() {
-  // Consulta si se ha conectado algún cliente.
-  WiFiClient client = server.available();
-  if (!client) { // Si no hay cliente...
-    return;      // No siga leyendo el código.
-  }
-  
-  Serial.print("Nuevo cliente: ");
-  Serial.println(client.remoteIP());
-  
-  // Espera hasta que el cliente envíe datos.
-  while(!client.available()){ delay(1); }
-
-  String req = client.readStringUntil('\r');
-  Serial.println(req); // Datos enviados por cliente.
-
-  // Página WEB. ///////////////////////////////
-  client.println("HTTP/1.1 200 OK");
-  client.println("Content-Type: text/html");
-  client.println(""); //  Importante.
-  client.println("<!DOCTYPE HTML>");
-  client.println("<html>");
-  client.println("<head><meta charset=utf-8></head>");
-  client.println("<body><center><font face='Arial'>");
-  client.println("<h1>Servidor web con ESP32.</h1>");
-  client.println("<h2><font color='#009900'>Universidad Politécnica de Juventino Rosas </font></h2>");
-  client.println("<h3>Página web.</h3>");
-  client.println("<br><br>");
-  client.println("<img src='http://www.upjr.edu.mx/resources/img/logo_upjr.png'><br>");
-  // client.println("<a href='juan'><button>Juan </button></a>");
-  // client.println("<a href='antonio'><button>Antonio </button></a>"); 
-  client.println("<a href='a'><button>Envía la letra a</button></a>");
-  // client.println("<a href='b'><button>Envía la letra b</button></a>"); 
-  client.println("</font></center></body></html>");
-
-  Serial.print("Cliente desconectado: ");
-  Serial.println(client.remoteIP());
-  client.flush();
-  client.stop();
-} 
-                </pre>
-            </div>
-            <p>Este código crea un servidor web en el ESP32 que permite interactuar con botones desde una página web. Al presionar el botón, el ESP32 recibe un comando y realiza una acción. Puedes personalizar el código para realizar diferentes acciones basadas en los botones que se presionen.</p>
-        </section>
-
-        <!-- Sección para controlar el LED con botones -->
-        <section>
-            <h2>Encender y Apagar un LED con Botones</h2>
-            <p>Este código permite controlar un LED conectado al ESP32 usando botones en una página web. Puedes encender y apagar el LED haciendo clic en los botones correspondientes:</p>
-            
-            <div class="command-line">
-                <pre>
-#include <WiFi.h>
-const char* ssid = "";
-const char* password = "";
-
-WiFiServer server(80);
-
-#define LED2  2    // LED en terminal 2
-String estado = "";
-
-void setup() {
-  Serial.begin(115200);
-  pinMode(LED2, OUTPUT);
-
-// Conecta a la red wifi.
-  Serial.println();
-  Serial.print("Conectando con ");
-  Serial.println(ssid);
- 
-  WiFi.begin(ssid, password);
- 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("Conectado con WiFi.");
- 
-  // Inicio del Servidor web.
-  server.begin();
-  Serial.println("Servidor web iniciado.");
- 
-  // Esta es la IP
-  Serial.print("Esta es la IP para conectar: ");
-  Serial.print("http://");
-  Serial.println(WiFi.localIP());
-}
- 
-void loop() {
-  // Consulta si se ha conectado algún cliente.
-  WiFiClient client = server.available();
-  if (!client) {
-    return;
-  }
-   
-  Serial.print("Nuevo cliente: ");
-  Serial.println(client.remoteIP());
-   
-  // Espera hasta que el cliente envíe datos.
-  // while(!client.available()){ delay(1); }
-
-  /////////////////////////////////////////////////////
-  // Lee la información enviada por el cliente.
-  String req = client.readStringUntil('\r');
-  Serial.println(req);
-
-  // Realiza la petición del cliente.
-       if (req.indexOf("on2") != -1) {digitalWrite(LED2, HIGH); estado = "Encendido"; }
-       if (req.indexOf("off2") != -1){digitalWrite(LED2, LOW); estado = "Apagado";}
-
-  //////////////////////////////////////////////
-  // Página WEB. ////////////////////////////
-  client.println("HTTP/1.1 200 OK");
-  client.println("Content-Type: text/html");
-  client.println(""); //  Importante.
-  client.println("<!DOCTYPE HTML>");
-  client.println("<html>");
-  client.println("<head><meta charset=utf-8></head>");
-  client.println("<body><center><font face='Arial'>");
-  client.println("<h1>Servidor web con ESP32.</h1>");
-  client.println("<h3>Página web.</h3>");
-  client.println("<br><br>");
-  client.println("<a href='on2'><button>Enciende LED2</button></a>");
-  client.println("<a href='off2'><button>Apaga LED2</button></a>"); 
-  client.println("<br><br>");
-  client.println(estado);
-  client.println("</font></center></body></html>");
-                </pre>
-            </div>
-            <p>Este código permite encender y apagar un LED conectado al pin 2 del ESP32 a través de una interfaz web. Cada vez que haces clic en los botones, el estado del LED cambia.</p>
-        </section>
-
-        <!-- Sección para Bluetooth clásico (SPP) -->
+        <!-- Sección de Bluetooth clásico (SPP) -->
         <section>
             <h2>Puente Serial a Bluetooth Clásico (SPP)</h2>
-            <p>Este código establece un puente entre el puerto serial del ESP32 y el Bluetooth clásico utilizando el perfil SPP (Serial Port Profile), lo que permite enviar y recibir datos entre ambos:</p>
+            <p>Este código establece un puente entre el puerto serial del ESP32 y el Bluetooth clásico usando el perfil SPP:</p>
             
             <div class="command-line">
                 <pre>
 //This example code is in the Public Domain (or CC0 licensed, at your option.)
 //By Evandro Copercini - 2018
-//
-//This example creates a bridge between Serial and Classical Bluetooth (SPP)
-//and also demonstrates that SerialBT has the same functionalities as a normal Serial
 
 #include "BluetoothSerial.h"
 
@@ -347,10 +235,10 @@ void loop() {
             <p>Este código permite crear una comunicación bidireccional entre el puerto serial del ESP32 y un dispositivo Bluetooth clásico, como un teléfono o una computadora.</p>
         </section>
 
-        <!-- Sección adicional -->
+        <!-- Enlace adicional -->
         <section>
-            <p>Para más detalles y pasos adicionales, visita nuestro sitio web:</p>
-            <a class="link-btn" href="https://luismi14.github.io/Esp32.github.io/" target="_blank">Ver más información y tutorial completo</a>
+            <p>Para más tutoriales y ejemplos, visita nuestro sitio web:</p>
+            <a class="button-link" href="https://luismi14.github.io/Esp32.github.io/" target="_blank">Ver más tutoriales y recursos</a>
         </section>
     </div>
 
