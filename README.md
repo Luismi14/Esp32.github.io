@@ -7,4 +7,4 @@ Esta guía es un primer paso para aprender cómo conectar tu **ESP32** a una red
 
 Para obtener los pasos detallados, el código necesario, y otros ejemplos de conexión, visita el siguiente enlace:
 
-[**Más información y código de conexión Wi-Fi para ESP32**](https://luismi14.github.io/Php_Mysql.github.io/)
+[**Más información y código de conexión Wi-Fi para ESP32**](https://luismi14.github.io/Esp32.github.io/)
