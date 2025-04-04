@@ -1,1 +1,146 @@
-Hello World
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexión ESP32 a Wi-Fi</title>
+    <style>
+        /* Estilos básicos para la página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        section {
+            margin: 20px;
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .command-line {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px;
+            font-family: "Courier New", Courier, monospace;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow-x: auto;
+            word-wrap: break-word;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .link-btn {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Conexión ESP32 a Wi-Fi</h1>
+        <p>Aprende a conectar tu ESP32 a una red Wi-Fi y empieza a crear proyectos IoT</p>
+    </header>
+
+    <div class="content-container">
+        <!-- Sección de introducción -->
+        <section>
+            <h2>¿Para qué sirve conectar el ESP32 a Wi-Fi?</h2>
+            <p>El ESP32 es un microcontrolador altamente versátil con capacidades de conectividad Wi-Fi y Bluetooth. Conectar el ESP32 a una red Wi-Fi abre un sinfín de posibilidades, como:</p>
+            <ul>
+                <li><strong>Desarrollo de proyectos IoT:</strong> Puedes conectar sensores, dispositivos y actuadores a la red para crear aplicaciones inteligentes.</li>
+                <li><strong>Automatización del hogar:</strong> Controla dispositivos electrónicos a través de internet o desde una aplicación móvil.</li>
+                <li><strong>Integración con la nube:</strong> Envía datos a plataformas en la nube como ThingSpeak, Blynk o Firebase.</li>
+                <li><strong>Comunicación remota:</strong> Interactúa con tu dispositivo desde cualquier lugar a través de internet.</li>
+            </ul>
+            <p>La capacidad de conectar el ESP32 a Wi-Fi es una habilidad fundamental para crear aplicaciones modernas y conectadas.</p>
+        </section>
+
+        <!-- Sección de código -->
+        <section>
+            <h2>Código de Conexión Paso a Paso</h2>
+            <p>A continuación, te mostramos el código básico para conectar el ESP32 a una red Wi-Fi utilizando el entorno de desarrollo Arduino IDE:</p>
+            
+            <div class="command-line">
+                <pre>
+#include <WiFi.h>
+
+const char* ssid = "Tu_Nombre_de_Red";  // Nombre de tu red Wi-Fi
+const char* password = "Tu_Contraseña";  // Contraseña de tu red Wi-Fi
+
+void setup() {
+  Serial.begin(115200);  // Inicializa la comunicación serial
+  delay(10);
+
+  // Conecta a la red Wi-Fi
+  Serial.println("Conectando a Wi-Fi...");
+  WiFi.begin(ssid, password);
+
+  // Espera hasta que esté conectado
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Intentando conectar...");
+  }
+
+  // Una vez conectado, imprime la dirección IP
+  Serial.println("Conexión exitosa!");
+  Serial.print("Dirección IP: ");
+  Serial.println(WiFi.localIP());
+}
+
+void loop() {
+  // El código de tu aplicación va aquí
+}
+                </pre>
+            </div>
+
+            <p>Este código es bastante sencillo. Sólo tienes que reemplazar "Tu_Nombre_de_Red" y "Tu_Contraseña" con los datos de tu red Wi-Fi. Luego, sube el código a tu ESP32 usando el Arduino IDE y abre el Monitor Serie para ver la dirección IP que se asignó a tu dispositivo.</p>
+        </section>
+
+        <section>
+            <p>Para más detalles y pasos adicionales, visita nuestro sitio web:</p>
+            <a class="link-btn" href="https://luismi14.github.io/Esp32.github.io/" target="_blank">Ver más información y tutorial completo</a>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 - Conexión ESP32 a Wi-Fi</p>
+    </footer>
+
+</body>
+</html>
