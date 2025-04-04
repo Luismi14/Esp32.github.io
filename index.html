@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conexión ESP32 a Wi-Fi</title>
+    <title>Conexión ESP32 a Wi-Fi y Más</title>
     <style>
         /* Estilos básicos para la página */
         body {
@@ -139,27 +139,15 @@
 <body>
 
     <header>
-        <h1>Conexión ESP32 a Wi-Fi</h1>
-        <p>Aprende a conectar tu ESP32 a una red Wi-Fi y empieza a crear proyectos IoT innovadores</p>
+        <h1>Conexión ESP32 a Wi-Fi y Más</h1>
+        <p>Aprende a conectar tu ESP32 a una red Wi-Fi, trabajar con Bluetooth y realizar proyectos IoT.</p>
     </header>
 
     <div class="content-container">
-        <!-- Sección de introducción -->
+        <!-- Sección de conexión Wi-Fi -->
         <section>
-            <h2>¿Para qué sirve conectar el ESP32 a Wi-Fi?</h2>
-            <p>El **ESP32** es un microcontrolador versátil que ofrece conectividad **Wi-Fi** y **Bluetooth**, ideal para aplicaciones IoT. Al conectar el ESP32 a una red Wi-Fi, se pueden realizar proyectos como:</p>
-            <ul>
-                <li><strong>Automatización del hogar:</strong> Controla dispositivos electrónicos desde cualquier lugar.</li>
-                <li><strong>Monitoreo remoto:</strong> Accede a sensores y datos desde cualquier parte del mundo.</li>
-                <li><strong>Integración con la nube:</strong> Envía datos a plataformas como ThingSpeak o Blynk.</li>
-                <li><strong>Comunicación entre dispositivos:</strong> Conecta varios dispositivos ESP32 para crear redes IoT.</li>
-            </ul>
-        </section>
-
-        <!-- Sección de código -->
-        <section>
-            <h2>Código de Conexión Paso a Paso</h2>
-            <p>A continuación, te mostramos el código básico para conectar el ESP32 a una red Wi-Fi:</p>
+            <h2>Conectar ESP32 a una red Wi-Fi</h2>
+            <p>Este código conecta tu ESP32 a una red Wi-Fi. Solo tienes que reemplazar "Tu_Nombre_de_Red" y "Tu_Contraseña" con los datos de tu red.</p>
             
             <div class="command-line">
                 <pre>
@@ -193,57 +181,217 @@ void loop() {
 }
                 </pre>
             </div>
-
-            <p>Este código es sencillo de usar. Solo debes sustituir "Tu_Nombre_de_Red" y "Tu_Contraseña" con los datos de tu red Wi-Fi. Luego, sube el código a tu ESP32 y abre el Monitor Serie para obtener la dirección IP asignada.</p>
         </section>
 
-        <!-- Sección de Bluetooth clásico (SPP) -->
+        <!-- Sección de control de LED con botones -->
         <section>
-            <h2>Puente Serial a Bluetooth Clásico (SPP)</h2>
-            <p>Este código establece un puente entre el puerto serial del ESP32 y el Bluetooth clásico usando el perfil SPP:</p>
+            <h2>Control de LED con Botones</h2>
+            <p>Este código crea un servidor web en el ESP32 para controlar un LED a través de botones en una página web.</p>
             
             <div class="command-line">
                 <pre>
-//This example code is in the Public Domain (or CC0 licensed, at your option.)
-//By Evandro Copercini - 2018
+// Enciende y apaga LED. Botones.
 
-#include "BluetoothSerial.h"
+#include <WiFi.h>
+const char* ssid = "";
+const char* password = "";
 
-#if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
-#error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
-#endif
+WiFiServer server(80);
 
-BluetoothSerial SerialBT;
+#define LED2  2    // LED en terminal 2
+String estado = "";
 
 void setup() {
   Serial.begin(115200);
-  SerialBT.begin("ESP32test"); //Bluetooth device name
-  Serial.println("The device started, now you can pair it with bluetooth!");
-}
+  pinMode(LED2, OUTPUT);
 
+// Conecta a la red wifi.
+  Serial.println();
+  Serial.print("Conectando con ");
+  Serial.println(ssid);
+ 
+  WiFi.begin(ssid, password);
+ 
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print("...");
+  }
+  Serial.println("Conectado con WiFi.");
+ 
+  // Inicio del Servidor web.
+  server.begin();
+  Serial.println("Servidor web iniciado.");
+ 
+  // Esta es la IP
+  Serial.print("Esta es la IP para conectar: ");
+  Serial.print("http://");
+  Serial.println(WiFi.localIP());
+}
+ 
 void loop() {
-  if (Serial.available()) {
-    SerialBT.write(Serial.read());
+  // Consulta si se ha conectado algún cliente.
+  WiFiClient client = server.available();
+  if (!client) {
+    return;
   }
-  if (SerialBT.available()) {
-    Serial.write(SerialBT.read());
-  }
-  delay(20);
+   
+  Serial.print("Nuevo cliente: ");
+  Serial.println(client.remoteIP());
+   
+  // Espera hasta que el cliente envíe datos.
+  String req = client.readStringUntil('\r');
+  Serial.println(req);
+
+  // Realiza la petición del cliente.
+       if (req.indexOf("on2") != -1) {digitalWrite(LED2, HIGH); estado = "Encendido";}
+       if (req.indexOf("off2") != -1){digitalWrite(LED2, LOW); estado = "Apagado";}
+
+  // Página WEB
+  client.println("HTTP/1.1 200 OK");
+  client.println("Content-Type: text/html");
+  client.println("");
+  client.println("<!DOCTYPE HTML>");
+  client.println("<html>");
+  client.println("<head><meta charset=utf-8></head>");
+  client.println("<body><center><font face='Arial'>");
+  client.println("<h1>Servidor web con ESP32.</h1>");
+  client.println("<h3>Página web.</h3>");
+  client.println("<br><br>");
+  client.println("<a href='on2'><button>Enciende LED2</button></a>");
+  client.println("<a href='off2'><button>Apaga LED2</button></a>");
+  client.println("<br><br>");
+  client.println(estado);
+  client.println("</font></center></body></html>");
+
+  Serial.print("Cliente desconectado: ");
+  Serial.println(client.remoteIP());
+  client.flush();
+  client.stop();
 }
                 </pre>
             </div>
-            <p>Este código permite crear una comunicación bidireccional entre el puerto serial del ESP32 y un dispositivo Bluetooth clásico, como un teléfono o una computadora.</p>
         </section>
 
-        <!-- Enlace adicional -->
+        <!-- Sección de ESP-NOW para recibir datos -->
         <section>
-            <p>Para más tutoriales y ejemplos, visita nuestro sitio web:</p>
-            <a class="button-link" href="https://luismi14.github.io/Esp32.github.io/" target="_blank">Ver más tutoriales y recursos</a>
-        </section>
-    </div>
+            <h2>Recibir Datos con ESP-NOW</h2>
+            <p>Este código permite recibir datos a través de ESP-NOW, un protocolo de comunicación de corto alcance en el ESP32.</p>
+            
+            <div class="command-line">
+                <pre>
+#include <esp_now.h>
+#include <WiFi.h>
 
+// Structure example to receive data
+typedef struct struct_message {
+    char a[32];
+    int b;
+    float c;
+    String d;
+    bool e;
+} struct_message;
+
+struct_message myData;
+
+void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
+  memcpy(&myData, incomingData, sizeof(myData));
+  Serial.print("Bytes recibidos: ");
+  Serial.println(len);
+  Serial.print("Char: ");
+  Serial.println(myData.a);
+  Serial.print("Int: ");
+  Serial.println(myData.b);
+  Serial.print("Float: ");
+  Serial.println(myData.c);
+  Serial.print("String: ");
+  Serial.println(myData.d);
+  Serial.print("Bool: ");
+  Serial.println(myData.e);
+
+  Serial.print("Procesando Int+1: ");
+  int res = myData.b + 1;
+  Serial.println(res);
+
+  Serial.print("Procesando Float+0.11: ");
+  float otro = myData.c + 0.22;
+  Serial.println(otro);
+}
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error inicializando ESP-NOW");
+    return;
+  }
+
+  esp_now_register_recv_cb(OnDataRecv);
+}
+
+void loop() {
+}
+                </pre>
+            </div>
+        </section>
+
+        <!-- Sección de ESP-NOW para enviar datos -->
+        <section>
+            <h2>Enviar Datos con ESP-NOW</h2>
+            <p>Este código permite enviar datos a otro dispositivo ESP32 utilizando el protocolo ESP-NOW.</p>
+            
+            <div class="command-line">
+                <pre>
+#include <esp_now.h>
+#include <WiFi.h>
+
+uint8_t broadcastAddress[] = {0x30, 0xAE, 0xA4, 0x97, 0xC1, 0x84};
+
+typedef struct struct_message {
+  char a[32];
+  int b;
+  float c;
+  String d;
+  bool e;
+} struct_message;
+
+struct_message myData;
+
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+  Serial.print("Datos enviados, estado: ");
+  Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Exitoso" : "Fallido");
+}
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+
+  if (esp_now_init() != ESP_OK) {
+    Serial.println("Error inicializando ESP-NOW");
+    return;
+  }
+
+  esp_now_register_send_cb(OnDataSent);
+  esp_now_add_peer(broadcastAddress, ESP_NOW_ROLE_COMBO, 1, NULL, 0);
+}
+
+void loop() {
+  strcpy(myData.a, "Hola ESP32");
+  myData.b = 123;
+  myData.c = 45.67;
+  myData.d = "Esto es un test";
+  myData.e = true;
+
+  esp_now_send(broadcastAddress, (uint8_t *)&myData, sizeof(myData));
+  delay(2000);
+}
+                </pre>
+            </div>
+        </section>
+
+       
     <footer>
-        <p>&copy; 2025 - Conexión ESP32 a Wi-Fi</p>
+        <p>&copy; 2025 - Conexión ESP32 a Wi-Fi y Más</p>
     </footer>
 
 </body>
